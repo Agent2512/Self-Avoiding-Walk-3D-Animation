@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Vector3 } from "three"
 import { BasicLine } from "./BasicLine"
 
 interface IAgent {
@@ -36,17 +37,17 @@ const allOptions: {
     ]
 
 export function Agent(props: IAgent) {
-    const [pos, setPos] = useState(props.position)
+    const [pos, setPos] = useState(new Vector3(props.position[0], props.position[1], props.position[2]))
 
     const t = () => {
         console.log("test");
         setPos(pre => {
-            const current:[number, number, number] = [...pre]
-            return [0,0,current[2]+1]
+            const current: [number, number, number] = [...pre.toArray()]
+            return new Vector3(0, 0, current[2] + 1)
         })
     }
-    const findOptions = ():[number, number, number][] => {
-        let options:[number, number, number][] = []
+    const findOptions = (): [number, number, number][] => {
+        let options: [number, number, number][] = []
 
         return options
     }
@@ -58,8 +59,10 @@ export function Agent(props: IAgent) {
                 <meshStandardMaterial color={0xff0000} wireframe />
             </mesh>
             {allOptions.map(i => {
+                const [x, y, z] = i.dir
+                const addPos = new Vector3().fromArray(i.dir).add(pos)
                 
-                return <BasicLine pos1={pos} pos2={i.dir} />
+                return <BasicLine pos1={pos} pos2={addPos} />
             })}
         </>
     )

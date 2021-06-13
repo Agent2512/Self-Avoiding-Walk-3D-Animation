@@ -1,8 +1,9 @@
 import { Line } from "@react-three/drei"
+import { Vector3 } from "three"
 
 interface IBasicLine {
-    pos1: [number, number, number]
-    pos2: [number, number, number]
+    pos1: [number, number, number] | Vector3
+    pos2: [number, number, number] | Vector3
 }
 
 export function BasicLine(props: IBasicLine) {
@@ -14,5 +15,5 @@ export function BasicLine(props: IBasicLine) {
             lineWidth={5}
         />
     )
-    
+
 }
